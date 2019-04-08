@@ -7,17 +7,6 @@ import tcm = require('./taskcommand');
 import semver = require('semver');
 import crypto = require('crypto');
 
-/**
- * Hash table of known variable info. The formatted env var name is the lookup key.
- *
- * The purpose of this hash table is to keep track of known variables. The hash table
- * needs to be maintained for multiple reasons:
- *  1) to distinguish between env vars and job vars
- *  2) to distinguish between secret vars and public
- *  3) to know the real variable name and not just the formatted env var name.
- */
-export var _knownVariableMap: { [key: string]: _KnownVariableInfo; } = {};
-
 
 //-----------------------------------------------------
 // Validation Checks
@@ -25,7 +14,7 @@ export var _knownVariableMap: { [key: string]: _KnownVariableInfo; } = {};
 
 // async await needs generators in node 4.x+
 if (semver.lt(process.versions.node, '4.2.0')) {
-    this.warning('Tasks require a new agent.  Upgrade your agent or node to 4.2.0 or later');
+    this.warning('Tasks require a new agent.  Upgrade node to 4.2.0 or later');
 }
 
 //-----------------------------------------------------
@@ -198,15 +187,17 @@ export function _command(command: string, properties: any, message: string) {
 }
 
 export function _warning(message: string): void {
-    _command('task.issue', { 'type': 'warning' }, message);
+    _command('tool.issue', { 'type': 'warning' }, message);
 }
 
 export function _error(message: string): void {
-    _command('task.issue', { 'type': 'error' }, message);
+    _command('tool.issue', { 'type': 'error' }, message);
 }
 
 export function _debug(message: string): void {
-    _command('task.debug', null, message);
+    if(process.env['toolrunner.debug'] === 'true') {
+        _command('tool.debug', null, message);
+    }
 }
 
 // //-----------------------------------------------------

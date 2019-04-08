@@ -1,6 +1,6 @@
 {
   "name": "toolrunner",
-  "version": "1.0.0",
+  "version": "1.0.5",
   "description": "Tool runner",
   "main": "./task.js",
   "typings": "./task.d.ts",
@@ -12,6 +12,7 @@
     "type": "git",
     "url": "https://github.com/judavi/toolrunner"
   },
+  "publishConfig":{"registry":"https://registry.npmjs.org/"},
   "keywords": [
     "bash",
     "powershell",

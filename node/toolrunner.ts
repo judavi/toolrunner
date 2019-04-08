@@ -74,7 +74,9 @@ export class ToolRunner extends events.EventEmitter {
     private pipeOutputToFile: string | undefined;
 
     private _debug(message: string) {
-        this.emit('debug', message);
+        if(process.env['toolrunner.debug'] === 'true') {
+            this.emit('debug', message);
+        }
     }
 
     private _argStringToArray(argString: string): string[] {

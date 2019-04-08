@@ -6,7 +6,7 @@
 //    ##vso[task.progress value=58]
 //    ##vso[task.issue type=warning;]This is the user warning message
 //
-let CMD_PREFIX = '##vso[';
+let CMD_PREFIX = '[';
 
 export class TaskCommand {
     constructor(command, properties, message) {
